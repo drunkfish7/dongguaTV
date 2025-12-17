@@ -2,6 +2,10 @@
   "name": "node-video-proxy",
   "version": "1.0.0",
   "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
   "dependencies": {
     "axios": "^1.6.0",
     "better-sqlite3": "^12.5.0",

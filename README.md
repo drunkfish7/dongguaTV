@@ -673,9 +673,23 @@ docker run -d -p 3000:3000 \
 | **默认服务器** | `https://ednovas.video` |
 | **图标来源** | 自动从 `public/icon.png` 生成 |
 
-#### 🔧 自定义服务器地址
+#### 🔧 自定义构建 (新功能)
+无需修改代码，直接在 GitHub 网页上自定义并构建 App：
 
-如果您 Fork 了本项目并部署了自己的服务器，可以修改 App 连接地址：
+1.  进入仓库的 **Actions** 页面。
+2.  在左侧选择 **"Android Build & Release"**。
+3.  点击右侧的 **Run workflow** 按钮。
+4.  输入配置信息：
+    - **Server URL**: 您的服务器地址 (例如 `https://movie.example.com`)
+    - **App Name**: App 名称 (例如 `我的私人影院`)
+    - **Version Tag**: 版本号 (例如 `v1.0.0`)
+5.  点击 **Run workflow** 开始构建。
+
+等待构建完成后，在 Releases 页面即可下载您定制的 App。
+
+#### 🔧 代码修改方式 (高级)
+
+如果您 Fork 了本项目并希望永久修改默认配置：
 
 1.  编辑 `capacitor.config.json`，修改 `server.url` 为您的服务器地址：
     ```json

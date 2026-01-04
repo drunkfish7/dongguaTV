@@ -738,6 +738,7 @@
             background: linear-gradient(90deg, rgba(229, 9, 20, 0.6), transparent) !important;
             color: #ff6b81 !important;
             font-weight: bold !important;
+            border-left: 3px solid #e50914 !important;
         }
 
         /* 24. 加载动画自定义 */
@@ -5000,6 +5001,45 @@
                             ]
                         });
 
+                        // 监听倍速变化，更新 UI
+                        if (dp.video) {
+                            dp.video.addEventListener('ratechange', () => {
+                                const speed = dp.video.playbackRate;
+                                const dplayerContainer = document.getElementById('dplayer');
+
+                                // 1. 更新右键菜单文本
+                                const menuItems = dplayerContainer.querySelectorAll('.dplayer-menu-item a');
+                                menuItems.forEach(item => {
+                                    if (item.textContent.includes('当前速度')) {
+                                        item.textContent = `⚡ 当前速度: ${speed}x`;
+                                    }
+                                });
+
+                                // 2. 显示倍速浮层提示
+                                const indicator = dplayerContainer.querySelector('.dplayer-speed-indicator');
+                                if (indicator) {
+                                    indicator.innerText = `倍速: ${speed}x`;
+                                    indicator.classList.add('show');
+                                    clearTimeout(indicator.hideTimer);
+                                    indicator.hideTimer = setTimeout(() => {
+                                        indicator.classList.remove('show');
+                                    }, 1500);
+                                }
+
+                                // 3. 强制更新设置面板中的高亮状态
+                                const speedItems = dplayerContainer.querySelectorAll('.dplayer-setting-speed-item');
+                                speedItems.forEach(item => {
+                                    // DPlayer 的 item 包含 data-speed 属性
+                                    const itemSpeed = parseFloat(item.dataset.speed);
+                                    if (itemSpeed && Math.abs(itemSpeed - speed) < 0.01) {
+                                        item.classList.add('dplayer-setting-speed-current');
+                                    } else {
+                                        item.classList.remove('dplayer-setting-speed-current');
+                                    }
+                                });
+                            });
+                        }
+
                         // ========== 🔧 设置菜单修复 ==========
                         setTimeout(() => {
                             const dplayerContainer = document.getElementById('dplayer');
@@ -5015,6 +5055,25 @@
                                             // 当设置菜单打开时，禁用遮罩层的点击事件
                                             mask.style.pointerEvents = isOpen ? 'none' : 'auto';
                                             console.log('[Settings] Menu ' + (isOpen ? 'OPENED - mask disabled' : 'CLOSED - mask enabled'));
+
+                                            // 打开菜单时，强制刷新一次倍速高亮
+                                            try {
+                                                if (isOpen && typeof dp !== 'undefined' && dp && dp.video) {
+                                                    const speed = dp.video.playbackRate;
+                                                    const dplayerContainer = document.getElementById('dplayer');
+                                                    if (dplayerContainer) {
+                                                        const speedItems = dplayerContainer.querySelectorAll('.dplayer-setting-speed-item');
+                                                        speedItems.forEach(item => {
+                                                            const itemSpeed = parseFloat(item.dataset.speed);
+                                                            if (itemSpeed && Math.abs(itemSpeed - speed) < 0.01) {
+                                                                item.classList.add('dplayer-setting-speed-current');
+                                                            } else {
+                                                                item.classList.remove('dplayer-setting-speed-current');
+                                                            }
+                                                        });
+                                                    }
+                                                }
+                                            } catch (e) { console.warn('Highlight update failed:', e); }
                                         }
                                     });
                                 });

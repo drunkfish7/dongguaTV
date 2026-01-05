@@ -218,9 +218,39 @@
             height: 100vh !important;
             z-index: 2147483647 !important;
             background: #000 !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            border-radius: 0 !important;
+        }
+
+        /* 📱 修复全屏模式下进度条不显示的问题 */
+        /* 覆盖可能存在的隐藏规则，确保进度条在全屏时可见 */
+        .dplayer-fulled .dplayer-bar-wrap,
+        .dplayer-full .dplayer-bar-wrap,
+        .dplayer-web-fullscreen .dplayer-bar-wrap {
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+        }
+
+        .dplayer-fulled .dplayer-bar,
+        .dplayer-full .dplayer-bar,
+        .dplayer-web-fullscreen .dplayer-bar {
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+        }
+
+        .dplayer-fulled .dplayer-thumb,
+        .dplayer-full .dplayer-thumb,
+        .dplayer-web-fullscreen .dplayer-thumb {
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+        }
+
+        .dplayer-fulled .dplayer-bar-time,
+        .dplayer-full .dplayer-bar-time,
+        .dplayer-web-fullscreen .dplayer-bar-time {
+            opacity: 1 !important;
+            visibility: visible !important;
         }
 
         /* 全屏时隐藏导航栏 */
@@ -844,9 +874,7 @@
             pointer-events: auto !important;
         }
 
-        /* 全屏时及自动隐藏时控制栏完全隐藏 */
-        .dplayer-fulled .dplayer-controller,
-        .dplayer-full .dplayer-controller,
+        /* ✅ 修复后：仅在控制器被自动隐藏时才隐藏（移除了 .dplayer-fulled 和 .dplayer-full） */
         .dplayer-hide-controller .dplayer-controller {
             opacity: 0 !important;
             visibility: hidden !important;
@@ -856,36 +884,13 @@
             pointer-events: none !important;
         }
 
-        /* 全屏时及自动隐藏时进度条也完全隐藏 */
-        .dplayer-fulled .dplayer-bar-wrap,
-        .dplayer-full .dplayer-bar-wrap,
-        .dplayer-fulled .dplayer-bar,
-        .dplayer-full .dplayer-bar,
-        .dplayer-fulled .dplayer-thumb,
-        .dplayer-full .dplayer-thumb,
-        .dplayer-fulled .dplayer-bar-time,
-        .dplayer-full .dplayer-bar-time,
+        /* ✅ 修复后：仅在控制器被自动隐藏时才隐藏进度条 */
         .dplayer-hide-controller .dplayer-bar-wrap,
         .dplayer-hide-controller .dplayer-bar-time,
         .dplayer-hide-controller .dplayer-thumb {
             opacity: 0 !important;
             visibility: hidden !important;
             pointer-events: none !important;
-        }
-
-        .dplayer-fulled:hover .dplayer-controller,
-        .dplayer-full:hover .dplayer-controller {
-            opacity: 1 !important;
-            visibility: visible !important;
-            transform: translateY(0) !important;
-            bottom: 0 !important;
-            pointer-events: auto !important;
-        }
-
-        .dplayer-fulled:hover .dplayer-bar-wrap,
-        .dplayer-full:hover .dplayer-bar-wrap {
-            opacity: 1 !important;
-            visibility: visible !important;
         }
 
         /* 单击触发显示控制栏 */

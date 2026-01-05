@@ -2508,52 +2508,47 @@
             }
         }
 
-        /* 📱 Android/Capacitor Fullscreen: 强制全屏覆盖整个屏幕 */
-        /* DPlayer 全屏模式 */
-        .dplayer-fulled,
-        .dplayer-fulled .dplayer-video-wrap,
-        .dplayer-fulled video {
+        /* 📱 Android/Capacitor Fullscreen: 只处理必要的全屏适配 */
+        /* DPlayer 全屏模式 - 确保覆盖整个屏幕 */
+        .dplayer-fulled {
             position: fixed !important;
             top: 0 !important;
             left: 0 !important;
             width: 100vw !important;
             height: 100vh !important;
-            max-width: none !important;
-            max-height: none !important;
-            margin: 0 !important;
-            padding: 0 !important;
             z-index: 2147483647 !important;
             background: #000 !important;
-            /* 忽略安全区域 */
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-            padding-left: 0 !important;
-            padding-right: 0 !important;
         }
 
-        /* 确保 body 和 html 在全屏时不会有额外空间 */
+        /* 确保 body 和 html 在全屏时不会滚动 */
         html:has(.dplayer-fulled),
         body:has(.dplayer-fulled) {
             overflow: hidden !important;
-            margin: 0 !important;
-            padding: 0 !important;
         }
 
         /* 隐藏导航栏 */
-        body.dplayer-fullscreen-active .navbar-custom,
         html:has(.dplayer-fulled) .navbar-custom,
-        body:has(.dplayer-fulled) .navbar-custom {
+        body:has(.dplayer-fulled) .navbar-custom,
+        html:has(.dplayer-web-fullscreen) .navbar-custom,
+        body:has(.dplayer-web-fullscreen) .navbar-custom {
             display: none !important;
         }
 
-        /* Web Fullscreen 模式 (DPlayer 的另一种全屏) */
-        .dplayer-web-fullscreen-fix {
+        /* 📺 网页全屏模式 (Web Fullscreen) */
+        .dplayer-web-fullscreen {
             position: fixed !important;
             top: 0 !important;
             left: 0 !important;
             width: 100vw !important;
             height: 100vh !important;
             z-index: 2147483647 !important;
+            background: #000 !important;
+        }
+
+        /* 网页全屏时隐藏滚动条 */
+        html:has(.dplayer-web-fullscreen),
+        body:has(.dplayer-web-fullscreen) {
+            overflow: hidden !important;
         }
     </style>
 </head>
